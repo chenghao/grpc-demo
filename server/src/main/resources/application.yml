@@ -1,0 +1,35 @@
+server:
+  port: 11000
+  shutdown: graceful
+  http2:
+    enabled: true
+  tomcat:
+    max-connections: 10000
+    max-keep-alive-requests: 10000
+    accept-count: 5000
+    connection-timeout: 30s
+    threads:
+      min-spare: 20
+      max: 500
+
+
+spring:
+  application:
+    name: grpc-demo-server
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+
+  datasource:
+    url: "jdbc:mysql://192.168.1.55:3306/test"
+    type: com.zaxxer.hikari.HikariDataSource
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-test-query: "select 1;"
+      minimum-idle: 20
+      maximum-pool-size: 50
+
+grpc:
+  port: 50051
