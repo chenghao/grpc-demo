@@ -1,11 +1,12 @@
 package demo.grpc.sdk.interceptor;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.grpc.*;
 
 public class HeaderClientInterceptor implements ClientInterceptor {
-    private static final Logger       logger            = Logger.getLogger(HeaderClientInterceptor.class.getName());
+    protected final Logger            logger            = LoggerFactory.getLogger(this.getClass());
 
     static final Metadata.Key<String> CUSTOM_HEADER_KEY = Metadata.Key.of("client_header_key", Metadata.ASCII_STRING_MARSHALLER);
 
