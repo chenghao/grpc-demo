@@ -22,14 +22,20 @@ public class HeaderServerInterceptor implements ServerInterceptor {
         // 当前客户端上传的client_header_key header值不是123456时就返回请求拒绝
         if (headerValue != null && headerValue.equals("123456")) {
             // 如果键值匹配，正常处理请求
-            return next.startCall(new ForwardingServerCall.SimpleForwardingServerCall<ReqT, RespT>(serverCall) {
-                @Override
-                public void sendHeaders(Metadata responseHeaders) {
-                    // 发送给客户端的header
-                    responseHeaders.put(CUSTOM_HEADER_KEY, headerValue);
-                    super.sendHeaders(responseHeaders);
-                }
-            }, requestHeaders);
+
+            // 将服务端的header值传给客户端
+            /*
+             * return next.startCall(new ForwardingServerCall.SimpleForwardingServerCall<ReqT, RespT>(serverCall) {
+             * @Override
+             * public void sendHeaders(Metadata responseHeaders) {
+             * responseHeaders.put(CUSTOM_HEADER_KEY, headerValue);
+             * super.sendHeaders(responseHeaders);
+             * }
+             * }, requestHeaders);
+             */
+
+            // 一般客户端不需要判断服务端的header
+            return next.startCall(serverCall, requestHeaders);
         } else {
             // 如果键值不匹配，可以拒绝请求或进行其他处理
             serverCall.close(Status.PERMISSION_DENIED.withDescription("Invalid header value for key: client_header_key"), requestHeaders);

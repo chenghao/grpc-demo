@@ -12,7 +12,7 @@ public class GrpcDemoClient {
     private static final Logger logger = Logger.getLogger(GrpcDemoClient.class.getName());
 
     public static void main(String[] args) throws InterruptedException {
-        ApiWrapper wrapper = ApiWrapper.ofMainnet("123456");
+        ApiWrapper wrapper = new ApiWrapper("192.168.1.3:50051", "123456");
 
         DemoGetRequest demoGetRequest = DemoGetRequest.newBuilder()
             .setId(10)
